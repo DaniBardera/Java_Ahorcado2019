@@ -5,6 +5,8 @@
  */
 package codigo;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -29,7 +31,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
     }
         
         display.setText(aux);
-        
+        dibujaImagen(0);
     }
 
     private void chequeaBoton(JButton boton){
@@ -59,7 +61,29 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         display.setText(palabraConGuiones);
     }
     
-    
+    private void dibujaImagen (int numeroDeFallos){
+        String nombreImagen = "";
+        switch (numeroDeFallos){
+            case 0 : nombreImagen = "/imagenes/ahorcado_0.png"; break;
+            case 1 : nombreImagen = "/imagenes/ahorcado_1.png"; break;
+            case 2 : nombreImagen = "/imagenes/ahorcado_2.png"; break;
+            case 3 : nombreImagen = "/imagenes/ahorcado_3.png"; break;
+            case 4 : nombreImagen = "/imagenes/ahorcado_4.png"; break;
+            case 5 : nombreImagen = "/imagenes/ahorcado_5.png"; break;
+            default : nombreImagen = "/imagenes/ahorcado_fin.png"; break;
+        }
+        
+        ImageIcon miImagen = 
+                new ImageIcon(
+                        new ImageIcon(getClass().getResource(nombreImagen))
+                        .getImage()
+                        .getScaledInstance(visorImagen.getWidth(),
+                                           visorImagen.getHeight(),
+                                           Image.SCALE_DEFAULT)
+                );
+        
+        visorImagen.setIcon(miImagen);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -410,11 +434,11 @@ public class VentanaAhorcado extends javax.swing.JFrame {
                                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(visorImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(158, 158, 158))))
+                        .addContainerGap(20, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(156, 156, 156)
+                .addComponent(visorImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
