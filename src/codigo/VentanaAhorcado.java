@@ -48,19 +48,32 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         //palabra oculta
         
         char letraPulsada = letra.charAt(0);
+        boolean acierto = false;
         for (int i=0; i< palabraOculta.length(); i++){
             if (palabraOculta.charAt(i) == letraPulsada){
                 palabraConGuiones = 
                         palabraConGuiones.substring(0, 2*i) //zona izquierda
                         + letra
                         + palabraConGuiones.substring(2*i+1); //zona derecha
+                acierto = true;
             }
         }
            
         //actualizo el display para que muestre las letras acertadas
         display.setText(palabraConGuiones);
-    }
+        // si acierto es false es porque la letra pulsada no estaba en la 
+        // palabra oculta
+        if (!acierto){
+            numeroDeFallos++;
+            dibujaImagen(numeroDeFallos);
+        }
+          // si el if se cumple es porque ya no hay guiones en el display
+        if (!palabraConGuiones.contains("_")){
+            dibujaImagen(-1);
+        }
     
+    }
+      
     private void dibujaImagen (int numeroDeFallos){
         String nombreImagen = "";
         switch (numeroDeFallos){
@@ -70,6 +83,7 @@ public class VentanaAhorcado extends javax.swing.JFrame {
             case 3 : nombreImagen = "/imagenes/ahorcado_3.png"; break;
             case 4 : nombreImagen = "/imagenes/ahorcado_4.png"; break;
             case 5 : nombreImagen = "/imagenes/ahorcado_5.png"; break;
+            case -1 : nombreImagen = "/imagenes/acertasteTodo.png"; break;
             default : nombreImagen = "/imagenes/ahorcado_fin.png"; break;
         }
         
