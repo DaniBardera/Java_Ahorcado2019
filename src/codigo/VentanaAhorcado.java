@@ -6,6 +6,7 @@
 package codigo;
 
 import java.awt.Image;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -17,12 +18,16 @@ public class VentanaAhorcado extends javax.swing.JFrame {
 
     String palabraOculta = "CETYS";
     int numeroDeFallos = 0;
+    // variable que indica si la partida ha terminado
+    boolean partidaTerminada = false;
+    
     
     /**
      * Creates new form VentanaAhorcado
      */
     public VentanaAhorcado() {
         initComponents();
+        palabraOculta = eligePalabra();
         //inicializo el display del juego para que tenga tantos guiones
         // bajos y espacios como la palabra oculta
         String aux = "";
@@ -36,8 +41,10 @@ public class VentanaAhorcado extends javax.swing.JFrame {
 
     private void chequeaBoton(JButton boton){
     
-        boton.setEnabled (false);
-       chequeaLetra(boton.getText());
+        if (!partidaTerminada){
+            boton.setEnabled (false);
+            chequeaLetra(boton.getText());
+        }
     }
     
     private void chequeaLetra (String letra){
@@ -66,14 +73,18 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         if (!acierto){
             numeroDeFallos++;
             dibujaImagen(numeroDeFallos);
+            if (numeroDeFallos >= 6){
+                partidaTerminada = true;
+            }
         }
           // si el if se cumple es porque ya no hay guiones en el display
         if (!palabraConGuiones.contains("_")){
             dibujaImagen(-1);
+            partidaTerminada = true;
         }
     
     }
-      
+         
     private void dibujaImagen (int numeroDeFallos){
         String nombreImagen = "";
         switch (numeroDeFallos){
@@ -99,6 +110,20 @@ public class VentanaAhorcado extends javax.swing.JFrame {
         visorImagen.setIcon(miImagen);
     }
     
+    private String eligePalabra(){
+        //este método elegirá una palabra al azar dentro de una lista
+        // la cual vamos a guardar en un array 
+        String [] listaPalabras = {"HITLER", "RIDICULO", "TONTO", "LOOSER"};
+        //para declarar sin inicializar ponemos {};
+        Random aleatorio = new Random();
+        // declaro una variable aleatoria
+        int posicion = aleatorio.nextInt(listaPalabras.length);
+            return listaPalabras[posicion];     
+    }
+    
+             
+             
+             
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
